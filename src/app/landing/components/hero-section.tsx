@@ -19,19 +19,12 @@ export function HeroSection() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="mx-auto max-w-3xl text-center">
           <Badge variant="outline" className="mb-8 px-4 py-2">
-            Business succession, handled with care
+            NextOwner
           </Badge>
 
           <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-6xl">
-            Find the next owner for your{" "}
-            <span className="text-primary">business</span>
+            Practise buying a business before you buy one.
           </h1>
-
-          <p className="mx-auto mb-10 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-            NextOwner connects business owners who are ready to step back with
-            people ready to take the next step, so the work you built keeps
-            going.
-          </p>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
             <Button
@@ -40,7 +33,7 @@ export function HeroSection() {
               nativeButton={false}
               render={<a href={getAppUrl("/auth/sign-up")} />}
             >
-              Get Started
+              Try the game
               <ArrowRight data-icon="inline-end" />
             </Button>
             <Button
@@ -48,9 +41,9 @@ export function HeroSection() {
               size="lg"
               className="text-base cursor-pointer"
               nativeButton={false}
-              render={<a href="#about" />}
+              render={<a href="#schools" />}
             >
-              Learn more
+              For schools
             </Button>
           </div>
         </div>

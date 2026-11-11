@@ -21,31 +21,31 @@ const faqItems: FaqItem[] = [
     value: "item-1",
     question: "What is NextOwner?",
     answer:
-      "NextOwner helps business owners who are ready to step back find someone to carry their business forward, and helps buyers and successors find established businesses to take over.",
+      "NextOwner is a practice platform. You learn how buying a business works and try the steps before you make a real purchase.",
   },
   {
     value: "item-2",
-    question: "Who is NextOwner for?",
+    question: "Who is it for?",
     answer:
-      "It is designed for owners preparing for a sale or transfer, and for people looking to acquire or take over an existing business.",
+      "It is for people who want to buy a business one day, and for schools that teach business skills.",
   },
   {
     value: "item-3",
-    question: "How is my information handled?",
+    question: "Do I need experience to start?",
     answer:
-      "Business details are shared only with the people you choose. Contact us for more detail on how we protect confidential information.",
+      "No. The lessons start with the basics, and you can move through the steps at your own pace.",
   },
   {
     value: "item-4",
-    question: "How do I get started?",
+    question: "Is this real money or a real business?",
     answer:
-      "Select Get Started to create an account, or send us a message and our team will reply to discuss your situation.",
+      "No. The game is a practice space. Nothing you do there is a real purchase or a real deal.",
   },
   {
     value: "item-5",
-    question: "What does it cost?",
+    question: "How do schools use NextOwner?",
     answer:
-      "Pricing details will be shared once they are confirmed. Contact us for the most current information.",
+      "Teachers use an instructor view to follow how each student works through the six steps. Schools can start with a pilot.",
   },
 ]
 
@@ -60,10 +60,6 @@ const FaqSection = () => {
           <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-4">
             Frequently asked questions
           </h2>
-          <p className="text-lg leading-relaxed text-muted-foreground">
-            Answers to the questions we hear most often. If yours is not here,
-            we are happy to help.
-          </p>
         </div>
 
         <div className="mx-auto max-w-3xl">
@@ -92,15 +88,12 @@ const FaqSection = () => {
           </Accordion>
 
           <div className="mt-12 text-center">
-            <p className="text-muted-foreground mb-4">
-              Still have a question? We are here to help.
-            </p>
             <Button
               className="cursor-pointer"
               nativeButton={false}
-              render={<a href="#contact" />}
+              render={<a href="#schools" />}
             >
-              Contact us
+              For schools
             </Button>
           </div>
         </div>

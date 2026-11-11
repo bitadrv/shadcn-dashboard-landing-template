@@ -1,14 +1,13 @@
 "use client"
 
-import type React from "react"
-import { LandingNavbar } from "./components/navbar"
+import { HowItWorksSection } from "./components/how-it-works-section"
 import { HeroSection } from "./components/hero-section"
-import { FeaturesSection } from "./components/features-section"
-import { CTASection } from "./components/cta-section"
-import { ContactSection } from "./components/contact-section"
+import { AreasSection } from "./components/areas-section"
+import { SchoolsSection } from "./components/schools-section"
 import { FaqSection } from "./components/faq-section"
+import { LandingNavbar } from "./components/navbar"
 import { LandingFooter } from "./components/footer"
-import { AboutSection } from "./components/about-section"
+import type React from "react"
 
 const nextOwnerPalette = {
   "--background": "#FFFFFF",
@@ -38,11 +37,10 @@ export default function LandingPage() {
 
       <main>
         <HeroSection />
-        <AboutSection />
-        <FeaturesSection />
+        <HowItWorksSection />
+        <AreasSection />
+        <SchoolsSection />
         <FaqSection />
-        <CTASection />
-        <ContactSection />
       </main>
 
       <LandingFooter />

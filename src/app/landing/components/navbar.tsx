@@ -21,11 +21,10 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { useTheme } from "@/hooks/use-theme"
 
 const navigationItems = [
-  { name: "Home", href: "#hero" },
-  { name: "Features", href: "#features" },
-  { name: "About", href: "#about" },
+  { name: "How it works", href: "#how-it-works" },
+  { name: "Areas", href: "#areas" },
+  { name: "For schools", href: "#schools" },
   { name: "FAQ", href: "#faq" },
-  { name: "Contact", href: "#contact" },
 ]
 
 const smoothScrollTo = (targetId: string) => {
