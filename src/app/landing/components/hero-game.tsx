@@ -1,195 +1,252 @@
 "use client"
 
-import { useState } from "react"
-import { ArrowRight, CircleCheck as CheckCircle2, Circle as XCircle } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { useEffect, useState, type PointerEvent, type ReactNode } from "react"
+import { animate, motion, useReducedMotion, type MotionValue, useMotionValue, useSpring, useTransform } from "motion/react"
+import { ArrowRight, Check, RotateCcw, X } from "lucide-react"
 import { getAppUrl } from "@/lib/utils"
+import {
+  PROFIT_HISTORY,
+  QUESTIONS,
+  SAMPLE_BAKERY,
+  formatMoney,
+} from "./hero-data"
 
-const SAMPLE_BAKERY = {
-  name: "Corner Bakery",
-  town: "Sample town",
-  price: "$285,000",
-  yearlyRevenue: "$540,000",
-  yearlyProfit: "$82,000",
+type HeroGameProps = {
+  onProgress: (fraction: number) => void
 }
 
-type Question = {
-  prompt: string
-  choices: string[]
-  correct: number
-  explanation: string
-}
-
-const QUESTIONS: Question[] = [
-  {
-    prompt: "The price is $285,000 and yearly profit is $82,000. About how many years of profit would pay the price back?",
-    choices: ["About 1 year", "About 3.5 years", "About 10 years"],
-    correct: 1,
-    explanation: "$285,000 divided by $82,000 is about 3.5 years.",
-  },
-  {
-    prompt: "The owner runs every recipe and knows every supplier. What worries you most?",
-    choices: [
-      "The recipes and supplier links leave with the owner",
-      "The bakery sells too many cakes",
-      "Nothing, the price is fine",
-    ],
-    correct: 0,
-    explanation: "Much of the value can be in knowledge the owner holds alone.",
-  },
-  {
-    prompt: "Yearly revenue is $540,000, but yearly profit is only $82,000. What should you check first?",
-    choices: [
-      "Where the money goes: rent, wages and ingredients",
-      "Nothing, the revenue is high enough",
-      "How many years the oven has left",
-    ],
-    correct: 0,
-    explanation: "Most of the revenue is spent on costs. Those costs decide the profit.",
-  },
-]
+const GLASS =
+  "rounded-2xl border border-white/15 bg-white/10 shadow-2xl shadow-black/30 backdrop-blur-xl"
 
 function getResult(score: number) {
-  if (score === QUESTIONS.length) {
-    return { title: "Sharp eye.", text: "You spotted the key risks. Sign up to practise with more businesses." }
-  }
-  if (score >= 1) {
-    return { title: "Good start.", text: "You caught some of the risks. Sign up to learn the ones you missed." }
-  }
-  return { title: "Keep practising.", text: "Buying a business has hidden risks. Sign up to learn how to spot them." }
+  if (score === QUESTIONS.length) return "Sharp eye."
+  if (score >= 2) return "Good start."
+  return "Keep practising."
 }
 
-export function HeroGame() {
+function CountUp({ value, format }: { value: number; format: (v: number) => string }) {
+  const reduce = useReducedMotion()
+  const [display, setDisplay] = useState(reduce ? value : 0)
+
+  useEffect(() => {
+    if (reduce) return
+    const controls = animate(0, value, {
+      duration: 1.4,
+      ease: [0.22, 1, 0.36, 1],
+      onUpdate: (v) => setDisplay(v),
+    })
+    return () => controls.stop()
+  }, [value, reduce])
+
+  return <>{format(display)}</>
+}
+
+function ProfitChart() {
+  const max = Math.max(...PROFIT_HISTORY)
+  const reduce = useReducedMotion()
+  return (
+    <div className="flex h-16 items-end gap-2">
+      {PROFIT_HISTORY.map((value, i) => (
+        <motion.div
+          key={i}
+          className="flex-1 origin-bottom rounded-sm bg-linear-to-t from-emerald-500/60 to-emerald-300"
+          style={{ height: `${(value / max) * 100}%` }}
+          initial={reduce ? false : { scaleY: 0 }}
+          animate={{ scaleY: 1 }}
+          transition={{ duration: 0.7, delay: 0.3 + i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+        />
+      ))}
+    </div>
+  )
+}
+
+function useTilt(pointerX: MotionValue<number>, pointerY: MotionValue<number>) {
+  const rotateX = useSpring(useTransform(pointerY, [-0.5, 0.5], [6, -6]), { stiffness: 120, damping: 20 })
+  const rotateY = useSpring(useTransform(pointerX, [-0.5, 0.5], [-8, 8]), { stiffness: 120, damping: 20 })
+  return { rotateX, rotateY }
+}
+
+export function HeroGame({ onProgress }: HeroGameProps) {
+  const reduce = useReducedMotion()
   const [step, setStep] = useState(0)
-  const [selected, setSelected] = useState<number | null>(null)
-  const [score, setScore] = useState(0)
-  const finished = step >= QUESTIONS.length
+  const [picked, setPicked] = useState<number | null>(null)
+  const [correct, setCorrect] = useState(0)
+  const [finished, setFinished] = useState(false)
+
+  const pointerX = useMotionValue(0)
+  const pointerY = useMotionValue(0)
+  const { rotateX, rotateY } = useTilt(pointerX, pointerY)
+
   const question = QUESTIONS[step]
+  const answered = picked !== null
 
-  function choose(index: number) {
-    if (selected !== null) return
-    setSelected(index)
-    if (index === question.correct) setScore((s) => s + 1)
+  const choose = (index: number) => {
+    if (answered) return
+    setPicked(index)
+    if (question.choices[index].correct) setCorrect((c) => c + 1)
+    onProgress((step + 1) / QUESTIONS.length)
   }
 
-  function next() {
-    setSelected(null)
+  const next = () => {
+    if (step + 1 >= QUESTIONS.length) {
+      setFinished(true)
+      return
+    }
     setStep((s) => s + 1)
+    setPicked(null)
   }
 
-  function restart() {
+  const playAgain = () => {
     setStep(0)
-    setSelected(null)
-    setScore(0)
+    setPicked(null)
+    setCorrect(0)
+    setFinished(false)
+    onProgress(0)
+  }
+
+  const handlePointerMove = (e: PointerEvent<HTMLDivElement>) => {
+    if (reduce) return
+    const rect = e.currentTarget.getBoundingClientRect()
+    pointerX.set((e.clientX - rect.left) / rect.width - 0.5)
+    pointerY.set((e.clientY - rect.top) / rect.height - 0.5)
+  }
+
+  const handlePointerLeave = () => {
+    pointerX.set(0)
+    pointerY.set(0)
   }
 
   return (
-    <Card className="mx-auto w-full max-w-xl text-left shadow-sm">
-      <CardHeader className="border-b pb-4">
-        <div className="flex items-center justify-between gap-2">
-          <Badge variant="secondary">Sample business</Badge>
-          <span className="text-xs text-muted-foreground">Mock data only</span>
-        </div>
-        <CardTitle className="pt-2 text-lg">
-          This bakery is for sale. Would you buy it?
-        </CardTitle>
-        <CardDescription>
-          {SAMPLE_BAKERY.name}, {SAMPLE_BAKERY.town}
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent className="grid grid-cols-3 gap-3 border-b pb-4 text-center">
-        <Stat label="Price" value={SAMPLE_BAKERY.price} />
-        <Stat label="Yearly revenue" value={SAMPLE_BAKERY.yearlyRevenue} />
-        <Stat label="Yearly profit" value={SAMPLE_BAKERY.yearlyProfit} />
-      </CardContent>
-
-      <CardContent className="pt-4">
-        {!finished ? (
-          <div key={step} className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <p className="text-xs font-medium text-muted-foreground">
-              Question {step + 1} of {QUESTIONS.length}
-            </p>
-            <p className="mt-2 text-base font-medium text-foreground">{question.prompt}</p>
-
-            <div className="mt-4 flex flex-col gap-2">
-              {question.choices.map((choice, index) => {
-                const isCorrect = index === question.correct
-                const isChosen = index === selected
-                const answered = selected !== null
-                return (
-                  <button
-                    key={choice}
-                    type="button"
-                    onClick={() => choose(index)}
-                    disabled={answered}
-                    className={[
-                      "flex w-full cursor-pointer items-center justify-between gap-3 rounded-lg border px-4 py-3 text-left text-sm transition-colors",
-                      "disabled:cursor-default",
-                      answered && isCorrect
-                        ? "border-green-600 bg-green-50 text-green-900"
-                        : answered && isChosen
-                          ? "border-red-600 bg-red-50 text-red-900"
-                          : "border-border bg-background text-foreground hover:bg-muted",
-                    ].join(" ")}
-                  >
-                    <span>{choice}</span>
-                    {answered && isCorrect && <CheckCircle2 className="size-4 shrink-0 text-green-700" />}
-                    {answered && isChosen && !isCorrect && <XCircle className="size-4 shrink-0 text-red-700" />}
-                  </button>
-                )
-              })}
+    <motion.div
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+      style={reduce ? undefined : { rotateX, rotateY, transformPerspective: 1200 }}
+      className="w-full"
+    >
+      <div className="relative [transform-style:preserve-3d]">
+        <motion.div
+          className="relative [transform-style:preserve-3d]"
+          animate={{ rotateY: finished ? 180 : 0 }}
+          transition={{ duration: reduce ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className={GLASS + " p-6 text-white [backface-visibility:hidden]"}>
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <p className="text-xs font-medium uppercase tracking-wider text-emerald-300">
+                  Sample listing
+                </p>
+                <h3 className="mt-1 text-lg font-semibold">{SAMPLE_BAKERY.name}</h3>
+                <p className="text-sm text-white/60">{SAMPLE_BAKERY.location}</p>
+              </div>
+              <span className="rounded-full border border-white/20 px-2.5 py-1 text-xs text-white/80">
+                Question {Math.min(step + 1, QUESTIONS.length)} of {QUESTIONS.length}
+              </span>
             </div>
 
-            {selected !== null && (
-              <div className="mt-4 flex items-center justify-between gap-3">
-                <p className="text-sm text-muted-foreground">{question.explanation}</p>
-                <Button size="sm" className="shrink-0 cursor-pointer" onClick={next}>
-                  {step + 1 === QUESTIONS.length ? "See result" : "Next"}
-                </Button>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-            <p className="text-xs font-medium text-muted-foreground">
-              You got {score} of {QUESTIONS.length} right
-            </p>
-            <p className="mt-2 text-lg font-semibold text-foreground">{getResult(score).title}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{getResult(score).text}</p>
+            <div className="mt-5 grid grid-cols-3 gap-3">
+              <Stat label="Asking price">
+                <CountUp value={SAMPLE_BAKERY.price} format={formatMoney} />
+              </Stat>
+              <Stat label="Revenue / yr">
+                <CountUp value={SAMPLE_BAKERY.yearlyRevenue} format={formatMoney} />
+              </Stat>
+              <Stat label="Profit / yr">
+                <CountUp value={SAMPLE_BAKERY.yearlyProfit} format={formatMoney} />
+              </Stat>
+            </div>
 
-            <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
-              <Button
-                size="lg"
-                className="cursor-pointer text-base"
-                nativeButton={false}
-                render={<a href={getAppUrl("/auth/sign-up")} />}
+            <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
+              <div className="mb-3 flex items-center justify-between text-xs text-white/60">
+                <span>Profit, last five years</span>
+                <span>Sample data</span>
+              </div>
+              <ProfitChart />
+            </div>
+
+            <div className="mt-5 rounded-xl border border-white/10 bg-white/5 p-4">
+              <p className="text-sm font-medium text-white">{question.prompt}</p>
+              <div className="mt-3 flex flex-col gap-2">
+                {question.choices.map((choice, i) => {
+                  const isPicked = picked === i
+                  const showCorrect = answered && choice.correct
+                  const showWrong = isPicked && !choice.correct
+                  return (
+                    <button
+                      key={choice.text}
+                      type="button"
+                      onClick={() => choose(i)}
+                      disabled={answered}
+                      className={[
+                        "flex items-center justify-between gap-3 rounded-lg border px-3 py-2.5 text-left text-sm transition-colors duration-200 cursor-pointer disabled:cursor-default",
+                        showCorrect
+                          ? "border-emerald-400/70 bg-emerald-400/15 text-white"
+                          : showWrong
+                            ? "border-rose-400/70 bg-rose-400/15 text-white"
+                            : "border-white/15 bg-white/5 text-white/85 hover:border-white/35 hover:bg-white/10",
+                      ].join(" ")}
+                    >
+                      <span>{choice.text}</span>
+                      {showCorrect && <Check className="size-4 shrink-0 text-emerald-300" />}
+                      {showWrong && <X className="size-4 shrink-0 text-rose-300" />}
+                    </button>
+                  )
+                })}
+              </div>
+              {picked !== null && (
+                <motion.div
+                  initial={reduce ? false : { opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mt-3 flex items-end justify-between gap-3"
+                >
+                  <p className="text-sm text-white/75">{question.choices[picked].note}</p>
+                  <button
+                    type="button"
+                    onClick={next}
+                    className="inline-flex shrink-0 cursor-pointer items-center gap-1 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-[#0F1F3F] transition-transform hover:-translate-y-0.5"
+                  >
+                    {step + 1 >= QUESTIONS.length ? "See result" : "Next"}
+                    <ArrowRight className="size-3.5" />
+                  </button>
+                </motion.div>
+              )}
+            </div>
+          </div>
+
+          <div className={`absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-white [backface-visibility:hidden] [transform:rotateY(180deg)] ${GLASS}`}>
+            <p className="text-xs font-medium uppercase tracking-wider text-emerald-300">Your result</p>
+            <p className="mt-2 text-4xl font-semibold tracking-tight">{getResult(correct)}</p>
+            <p className="mt-2 text-sm text-white/70">
+              You spotted {correct} of {QUESTIONS.length} sensible checks.
+            </p>
+            <div className="mt-6 flex w-full flex-col gap-2 sm:flex-row sm:justify-center">
+              <a
+                href={getAppUrl("/auth/sign-up")}
+                className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full bg-emerald-400 px-5 py-2.5 text-sm font-semibold text-[#06213F] transition-transform hover:-translate-y-0.5"
               >
-                Sign up
-                <ArrowRight data-icon="inline-end" />
-              </Button>
+                Sign up to practise for real
+                <ArrowRight className="size-4" />
+              </a>
               <button
                 type="button"
-                onClick={restart}
-                className="cursor-pointer text-sm text-muted-foreground underline-offset-4 hover:underline"
+                onClick={playAgain}
+                className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full border border-white/25 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
               >
+                <RotateCcw className="size-4" />
                 Play again
               </button>
             </div>
           </div>
-        )}
-      </CardContent>
-    </Card>
+        </motion.div>
+      </div>
+    </motion.div>
   )
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div>
-      <p className="text-xs text-muted-foreground">{label}</p>
-      <p className="mt-1 text-sm font-semibold text-foreground">{value}</p>
+    <div className="rounded-xl border border-white/10 bg-white/5 p-3">
+      <p className="text-[11px] uppercase tracking-wider text-white/55">{label}</p>
+      <p className="mt-1 text-sm font-semibold tabular-nums text-white sm:text-base">{children}</p>
     </div>
   )
 }
