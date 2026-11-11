@@ -9,59 +9,50 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { CardDecorator } from "@/components/ui/card-decorator"
-import { Code, Palette, LayoutGrid as Layout, Crown } from "lucide-react"
-import { Github } from "@/components/icons/brand-icons"
+import { HeartHandshake, Scale, Sprout } from "lucide-react"
 
 const values = [
   {
-    icon: Code,
-    title: "Developer First",
+    icon: Sprout,
+    title: "Continuity",
     description:
-      "Every component is built with the developer experience in mind, ensuring clean code and easy integration.",
+      "A business is more than its balance sheet. We care about what happens to its customers, its team, and its community.",
   },
   {
-    icon: Palette,
-    title: "Design Excellence",
+    icon: Scale,
+    title: "Fairness",
     description:
-      "We maintain the highest design standards, following shadcn/ui principles and modern UI patterns.",
+      "Owners and buyers both deserve clear information and an honest process.",
   },
   {
-    icon: Layout,
-    title: "Production Ready",
+    icon: HeartHandshake,
+    title: "Respect",
     description:
-      "Battle-tested components used in real applications with proven performance and reliability across different environments.",
-  },
-  {
-    icon: Crown,
-    title: "Premium Quality",
-    description:
-      "Hand-crafted with attention to detail and performance optimization, ensuring exceptional user experience and accessibility.",
+      "Every conversation is handled with discretion and care for the people involved.",
   },
 ]
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-24 sm:py-32">
+    <section id="about" className="py-24 sm:py-32 bg-muted/40">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="mx-auto max-w-4xl text-center mb-16">
+        <div className="mx-auto max-w-3xl text-center mb-16">
           <Badge variant="outline" className="mb-4">
-            About ShadcnStore
+            About NextOwner
           </Badge>
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-6">
-            Built for developers, by developers
+          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl mb-6">
+            Every business deserves a next owner
           </h2>
-          <p className="text-lg text-muted-foreground mb-8">
-            We're passionate about creating the best marketplace for shadcn/ui
-            components and templates. Our mission is to accelerate development
-            and help developers build beautiful admin interfaces faster.
+          <p className="text-lg leading-relaxed text-muted-foreground">
+            NextOwner exists so that businesses built over years do not end
+            when their founders retire. We bring owners and successors together
+            so the work continues.
           </p>
         </div>
 
-        {/* Modern Values Grid with Enhanced Design */}
-        <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 xl:grid-cols-4 mb-12">
-          {values.map((value, index) => (
-            <Card key={index} className="group shadow-xs py-2">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 mb-16">
+          {values.map((value) => (
+            <Card key={value.title} className="shadow-xs">
               <CardHeader className="items-center p-8 text-center">
                 <CardDecorator>
                   <value.icon className="size-6" aria-hidden />
@@ -69,7 +60,7 @@ export function AboutSection() {
                 <CardTitle className="mt-6 text-balance">
                   {value.title}
                 </CardTitle>
-                <CardDescription className="mt-3">
+                <CardDescription className="mt-3 leading-relaxed">
                   {value.description}
                 </CardDescription>
               </CardHeader>
@@ -77,45 +68,15 @@ export function AboutSection() {
           ))}
         </div>
 
-        {/* Call to Action */}
-        <div className="mt-16 text-center">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <span className="text-muted-foreground">
-              ❤️ Made with love for the developer community
-            </span>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              size="lg"
-              className="cursor-pointer"
-              nativeButton={false}
-              render={
-                <a
-                  href="https://github.com/shadcnstore/shadcn-dashboard-landing-template"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              }
-            >
-              <Github data-icon="inline-start" />
-              Star on GitHub
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="cursor-pointer"
-              nativeButton={false}
-              render={
-                <a
-                  href="https://discord.com/invite/XEQhPc9a6p"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                />
-              }
-            >
-              Join Discord Community
-            </Button>
-          </div>
+        <div className="text-center">
+          <Button
+            size="lg"
+            className="cursor-pointer"
+            nativeButton={false}
+            render={<a href="#contact" />}
+          >
+            Get in touch
+          </Button>
         </div>
       </div>
     </section>
