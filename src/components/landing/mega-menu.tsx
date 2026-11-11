@@ -1,18 +1,6 @@
 "use client"
 
-import {
-  Shield,
-  BarChart3,
-  Database,
-  Building2,
-  Rocket,
-  Settings,
-  Zap,
-  Package,
-  Layout,
-  Crown,
-  Palette,
-} from "lucide-react"
+import { Shield, ChartBar as BarChart3, Database, Building as Building2, Rocket, Settings, Zap, Package, LayoutGrid as Layout, Crown, Palette } from "lucide-react"
 
 const menuSections = [
   {

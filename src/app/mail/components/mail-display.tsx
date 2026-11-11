@@ -4,16 +4,7 @@ import { addDays } from "date-fns"
 import { addHours } from "date-fns"
 import { format } from "date-fns"
 import { nextSaturday } from "date-fns"
-import {
-  Archive,
-  ArchiveX,
-  Clock,
-  Forward,
-  MoreVertical,
-  Reply,
-  ReplyAll,
-  Trash2,
-} from "lucide-react"
+import { Archive, ArchiveX, Clock, Forward, MoveVertical as MoreVertical, Reply, ReplyAll, Trash as Trash2 } from "lucide-react"
 
 import {
   DropdownMenuContent,

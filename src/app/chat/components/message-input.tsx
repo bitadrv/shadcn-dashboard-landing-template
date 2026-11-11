@@ -1,15 +1,7 @@
 "use client"
 
 import { useState, useRef } from "react"
-import {
-  Send,
-  Paperclip,
-  Smile,
-  Image as ImageIcon,
-  FileText,
-  Mic,
-  MoreHorizontal,
-} from "lucide-react"
+import { Send, Paperclip, File as Smile, Image as ImageIcon, FileText, Mic, MoveHorizontal as MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {

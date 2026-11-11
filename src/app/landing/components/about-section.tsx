@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { CardDecorator } from "@/components/ui/card-decorator"
-import { Code, Palette, Layout, Crown } from "lucide-react"
+import { Code, Palette, LayoutGrid as Layout, Crown } from "lucide-react"
 import { Github } from "@/components/icons/brand-icons"
 
 const values = [

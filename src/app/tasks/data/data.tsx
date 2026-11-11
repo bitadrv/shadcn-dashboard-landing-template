@@ -1,4 +1,4 @@
-import { CheckCircle2, Circle, Clock, PlayCircle } from "lucide-react"
+import { CircleCheck as CheckCircle2, Circle, Clock, CirclePlay as PlayCircle } from "lucide-react"
 
 export const categories = [
   {

@@ -1,20 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import {
-  ChevronLeft,
-  ChevronRight,
-  Calendar as CalendarIcon,
-  Clock,
-  MapPin,
-  Users,
-  MoreHorizontal,
-  Search,
-  Grid3X3,
-  List,
-  ChevronDown,
-  Menu,
-} from "lucide-react"
+import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock, MapPin, Users, MoveHorizontal as MoreHorizontal, Search, Grid3x2 as Grid3X3, List, ChevronDown, Menu } from "lucide-react"
 import {
   format,
   addMonths,

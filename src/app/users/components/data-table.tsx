@@ -12,15 +12,7 @@ import {
 } from "@tanstack/react-table"
 
 import { dataTableFeatures, type DataTableFeatures } from "@/lib/data-table"
-import {
-  ChevronDown,
-  EllipsisVertical,
-  Eye,
-  Pencil,
-  Trash2,
-  Download,
-  Search,
-} from "lucide-react"
+import { ChevronDown, EllipsisVertical, Eye, Pencil, Trash as Trash2, Download, Search } from "lucide-react"
 
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"

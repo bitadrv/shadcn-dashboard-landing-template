@@ -1,14 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import {
-  Check,
-  ChevronRight,
-  Plus,
-  Eye,
-  EyeOff,
-  MoreHorizontal,
-} from "lucide-react"
+import { Check, ChevronRight, Plus, Eye, EyeOff, MoveHorizontal as MoreHorizontal } from "lucide-react"
 
 import {
   Collapsible,

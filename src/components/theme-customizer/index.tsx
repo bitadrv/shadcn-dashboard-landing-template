@@ -1,7 +1,7 @@
 "use client"
 
 import React from "react"
-import { Layout, Palette, RotateCcw, Settings, X } from "lucide-react"
+import { LayoutGrid as Layout, Palette, RotateCcw, Settings, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Sheet,

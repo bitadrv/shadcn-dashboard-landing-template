@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Calendar, Clock, RefreshCw, Filter } from "lucide-react"
+import { Calendar, Clock, RefreshCw, ListFilter as Filter } from "lucide-react"
 import {
   Card,
   CardDescription,

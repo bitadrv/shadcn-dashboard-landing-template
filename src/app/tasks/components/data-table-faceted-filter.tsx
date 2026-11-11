@@ -3,7 +3,7 @@
 import * as React from "react"
 import type { Column, RowData } from "@tanstack/react-table"
 import type { DataTableFeatures } from "@/lib/data-table"
-import { PlusCircle } from "lucide-react"
+import { CirclePlus as PlusCircle } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"

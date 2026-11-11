@@ -1,15 +1,6 @@
 "use client"
 
-import {
-  Phone,
-  Video,
-  Info,
-  Search,
-  MoreVertical,
-  Users,
-  Bell,
-  BellOff,
-} from "lucide-react"
+import { Phone, Video, Info, Search, MoveVertical as MoreVertical, Users, Bell, BellOff } from "lucide-react"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"

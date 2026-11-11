@@ -1,6 +1,6 @@
 "use client"
 
-import { Eye, MoreHorizontal } from "lucide-react"
+import { Eye, MoveHorizontal as MoreHorizontal } from "lucide-react"
 import {
   Card,
   CardContent,

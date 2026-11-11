@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { format, isToday, isYesterday } from "date-fns"
-import { Check, MoreHorizontal, Reply, Copy, Trash2 } from "lucide-react"
+import { Check, MoveHorizontal as MoreHorizontal, Reply, Copy, Trash as Trash2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"

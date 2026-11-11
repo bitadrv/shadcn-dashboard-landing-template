@@ -24,14 +24,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import {
-  Users,
-  MapPin,
-  TrendingUp,
-  Target,
-  ArrowUpIcon,
-  UserIcon,
-} from "lucide-react"
+import { Users, MapPin, TrendingUp, Target, ArrowUp as ArrowUpIcon, User as UserIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 const customerGrowthData = [

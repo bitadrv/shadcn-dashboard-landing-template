@@ -2,7 +2,7 @@
 
 import type { Row, RowData } from "@tanstack/react-table"
 import type { DataTableFeatures } from "@/lib/data-table"
-import { MoreHorizontal } from "lucide-react"
+import { MoveHorizontal as MoreHorizontal } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {

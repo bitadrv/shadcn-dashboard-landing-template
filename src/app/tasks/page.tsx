@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { z } from "zod"
-import { ArrowUp, BarChart3, CheckCircle2, Clock, ListTodo } from "lucide-react"
+import { ArrowUp, ChartBar as BarChart3, CircleCheck as CheckCircle2, Clock, ListTodo } from "lucide-react"
 
 import { BaseLayout } from "@/components/layouts/base-layout"
 import {

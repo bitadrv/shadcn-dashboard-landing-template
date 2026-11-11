@@ -1,21 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {
-  LayoutPanelLeft,
-  LayoutDashboard,
-  Mail,
-  CheckSquare,
-  MessageCircle,
-  Calendar,
-  Shield,
-  AlertTriangle,
-  Settings,
-  HelpCircle,
-  CreditCard,
-  LayoutTemplate,
-  Users,
-} from "lucide-react"
+import { LayoutPanelLeft, LayoutDashboard, Mail, SquareCheck as CheckSquare, MessageCircle, Calendar, Shield, TriangleAlert as AlertTriangle, Settings, Circle as HelpCircle, CreditCard, LayoutTemplate, Users } from "lucide-react"
 import { Link } from "react-router-dom"
 import { Logo } from "@/components/logo"
 import { SidebarNotification } from "@/components/sidebar-notification"

@@ -1,6 +1,6 @@
 "use client"
 
-import { CircleHelp } from "lucide-react"
+import { Circle as CircleHelp } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   Accordion,

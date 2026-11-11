@@ -1,13 +1,6 @@
 "use client"
 
-import {
-  TrendingUp,
-  TrendingDown,
-  DollarSign,
-  Users,
-  ShoppingCart,
-  BarChart3,
-} from "lucide-react"
+import { TrendingUp, TrendingDown, DollarSign, Users, ShoppingCart, ChartBar as BarChart3 } from "lucide-react"
 import {
   Card,
   CardAction,

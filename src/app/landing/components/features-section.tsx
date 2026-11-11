@@ -1,16 +1,6 @@
 "use client"
 
-import {
-  BarChart3,
-  Zap,
-  Users,
-  ArrowRight,
-  Database,
-  Package,
-  Crown,
-  Layout,
-  Palette,
-} from "lucide-react"
+import { ChartBar as BarChart3, Zap, Users, ArrowRight, Database, Package, Crown, LayoutGrid as Layout, Palette } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Image3D } from "@/components/image-3d"

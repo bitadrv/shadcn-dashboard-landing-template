@@ -1,19 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {
-  AlertCircle,
-  Archive,
-  ArchiveX,
-  File,
-  Inbox,
-  MessagesSquare,
-  Search,
-  Send,
-  ShoppingCart,
-  Trash2,
-  Users2,
-} from "lucide-react"
+import { CircleAlert as AlertCircle, Archive, ArchiveX, File, Inbox, MessagesSquare, Search, Send, ShoppingCart, Trash as Trash2, Users as Users2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import {

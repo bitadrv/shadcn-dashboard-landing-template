@@ -8,7 +8,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { Crown, AlertTriangle } from "lucide-react"
+import { Crown, TriangleAlert as AlertTriangle } from "lucide-react"
 
 interface CurrentPlan {
   planName: string

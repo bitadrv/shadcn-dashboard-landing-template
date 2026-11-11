@@ -1,17 +1,7 @@
 "use client"
 
 import { format, isToday, isYesterday, isThisWeek, isThisYear } from "date-fns"
-import {
-  Search,
-  Pin,
-  VolumeX,
-  MoreVertical,
-  Users,
-  Hash,
-  Settings,
-  UserPlus,
-  Filter,
-} from "lucide-react"
+import { Search, Pin, VolumeX, MoveVertical as MoreVertical, Users, Hash, Settings, UserPlus, ListFilter as Filter } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
