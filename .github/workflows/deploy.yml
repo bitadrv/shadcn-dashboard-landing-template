@@ -53,12 +53,10 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: Install dependencies
-        working-directory: ./vite-version
         run: |
           pnpm install --frozen-lockfile
 
       - name: Build template
-        working-directory: ./vite-version
         env:
           BASE_URL: ${{ steps.deploy-vars.outputs.BASE_URL }}
           BASENAME: ${{ steps.deploy-vars.outputs.BASENAME }}
@@ -116,7 +114,6 @@ jobs:
           TEMPLATE_DIR: ${{ steps.deploy-vars.outputs.TEMPLATE_DIR }}
           RELEASE_NAME: ${{ steps.deploy-vars.outputs.RELEASE_NAME }}
           DOMAIN: ${{ steps.deploy-vars.outputs.DOMAIN }}
-        working-directory: ./vite-version
         run: |
           echo "🚀 Starting template deployment to ${{ env.DEPLOY_ENV }} environment..."
 
