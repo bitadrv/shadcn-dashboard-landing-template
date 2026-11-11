@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { DotPattern } from "@/components/dot-pattern"
 import { getAppUrl } from "@/lib/utils"
+import { HeroGame } from "./hero-game"
 
 export function HeroSection() {
   return (
@@ -45,6 +46,10 @@ export function HeroSection() {
             >
               For schools
             </Button>
+          </div>
+
+          <div className="mt-12">
+            <HeroGame />
           </div>
         </div>
       </div>
